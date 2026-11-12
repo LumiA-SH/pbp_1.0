@@ -2,7 +2,7 @@
   "name": "pbp-rp-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://lumia-sh.github.io/pbp_1.0/",
   "dependencies": {
     "@supabase/supabase-js": "^2.57.0",
     "react": "^18.3.1",
@@ -12,6 +12,26 @@
     "marked": "^15.0.0",
     "dompurify": "^3.2.0"
   },
-  "scripts": {"start": "react-scripts start", "build": "react-scripts build", "test": "react-scripts test --watchAll=false"},
-  "browserslist": {"production": [">0.2%", "not dead", "not op_mini all"], "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]}
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --watchAll=false",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
