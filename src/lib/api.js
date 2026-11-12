@@ -43,8 +43,18 @@ export async function loginWithCode(code) {
 
 export async function adminAuthAction(action, values = {}) {
   const base = process.env.REACT_APP_AUTH_API_URL;
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!base || !session) throw new Error('관리자 로그인이 필요합니다.');
+
+  if (!base) {
+    throw new Error('REACT_APP_AUTH_API_URL을 설정해 주세요.');
+  }
+
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+  if (sessionError) throw sessionError;
+
+  if (!session?.access_token) {
+    throw new Error('관리자 로그인이 필요합니다.');
+  }
 
   const response = await fetch(`${base.replace(/\/$/, '')}/pbp-auth`, {
     method: 'POST',
@@ -52,10 +62,18 @@ export async function adminAuthAction(action, values = {}) {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${session.access_token}`
     },
-    body: JSON.stringify({ action, ...values })
+    body: JSON.stringify({
+      action,
+      ...values
+    })
   });
+
   const result = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(result.error || '관리자 작업에 실패했습니다.');
+
+  if (!response.ok) {
+    throw new Error(result.error || `관리자 작업 실패 (${response.status})`);
+  }
+
   return result;
 }
 

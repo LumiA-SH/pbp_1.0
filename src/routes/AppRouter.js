@@ -206,7 +206,7 @@ export default function AppRouter() {
             <header className="topbar">
                 <button className="brand" onClick={() => navigate('rooms')}>
                     <BookOpen size={23} />
-                    기록의 방
+                    DIALOGUE
                 </button>
 
                 <div className="top-actions">
